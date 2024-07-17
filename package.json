@@ -26,7 +26,7 @@
     }
   },
   "devDependencies": {
-    "cordova_camera": "github:observaInc/cordova_camera#eaeb0c49c5da58722bc43af2662e3cfb06922985",
+    "cordova_camera": "github:observaInc/cordova_camera#07e181d784591fd3d179576e1b67b22bfc154626",
     "cordova-android": "^13.0.0",
     "cordova-plugin-file": "^8.1.0"
   }
