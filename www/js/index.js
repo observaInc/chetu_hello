@@ -28,16 +28,28 @@ function onDeviceReady() {
     document.getElementById('deviceready').classList.add('ready');
 
     //
-    // Default cordova camera code
+    // This should work regardless of which plugin you use (cordova_camera or cordova-plugin-camera). But we should be able to include both!!
     //
     const btnDef = document.querySelector('#defaultCamera');
     btnDef.addEventListener('click', () => {
+
+        // Clear out the displayed images before getting more.
+        document.getElementById('foundImages').innerHTML = '';
         navigator.camera.getPicture(function(imageURI) {
-            window.resolveLocalFileSystemURL(imageURI, function success(fileEntry) {
-                let image = document.getElementById('defaultImage');
-                image.src = fileEntry.toInternalURL();
-            });
-            image.src = imageURI;
+            // MOve the files to somewhere local so cordova app can display them.
+            navigator.camera.localizePhotos(imageURI, function(arrayLocalizedFiles) {
+                arrayLocalizedFiles.forEach(function(objPhoto) {
+                    let newEl;
+                    if (objPhoto.status == "ok") {
+                        newEl = document.createElement('img');
+                        newEl.src = objPhoto.data;
+                    } else {
+                        newEl = document.createElement('div');
+                        newEl.innerHTML = "ERROR" + objPhoto.data;
+                    }
+                    document.getElementById('foundImages').appendChild(newEl);
+                });
+            })
         }, function(message) {
             alert('Failed because: ' + message);
         }, {
