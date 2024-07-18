@@ -42,7 +42,7 @@ body {
     background:url(../img/logo.png) no-repeat center top; /* 170px x 200px */
     position:absolute;             /* position in the center of the screen */
     left:50%;
-    top:50%;
+    top:20%;
     height:50px;                   /* text area height */
     width:225px;                   /* text area width */
     text-align:center;
@@ -106,7 +106,13 @@ h1 {
     margin:50px;
 }
 
-#defaultImage {
+#foundImages {
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y:scroll;
+    max-height:300px;
+}
+#foundImages img {
     max-width:150px;
     max-height:150px;
 }
