@@ -27,17 +27,12 @@ function onDeviceReady() {
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
     document.getElementById('deviceready').classList.add('ready');
 
-    //
-    // This should work regardless of which plugin you use (cordova_camera or cordova-plugin-camera). But we should be able to include both!!
-    //
-    const btnDef = document.querySelector('#defaultCamera');
-    btnDef.addEventListener('click', () => {
-
+    document.querySelector('#chetuCamera').addEventListener('click', () => {
         // Clear out the displayed images before getting more.
         document.getElementById('foundImages').innerHTML = '';
-        navigator.camera.getPicture(function(imageURI) {
+        navigator.CustomCamera.getPicture(function(imageURI) {
             // MOve the files to somewhere local so cordova app can display them.
-            navigator.camera.localizePhotos(imageURI, function(arrayLocalizedFiles) {
+            navigator.CustomCamera.localizePhotos(imageURI, function(arrayLocalizedFiles) {
                 arrayLocalizedFiles.forEach(function(objPhoto) {
                     let newEl;
                     if (objPhoto.status == "ok") {
@@ -55,12 +50,39 @@ function onDeviceReady() {
         }, {
             quality: 50,
             destinationType: Camera.DestinationType.FILE_URI,
-            angleValue:false,
-            blurValue:false,
-            glarValue:false,
-            tiltedValue:false
+            angleDetectionEnabled:true,
+            angleGreaterThanThreshold:80,
+            blurDetectionEnabled:false,
+            glareDetectionEnabled:false,
+            tiltDetectionEnabled:false,
+
         }, 'startCamera');
     });
 
+    document.querySelector('#defaultCamera').addEventListener('click', () => {
+        // Clear out the displayed images before getting more.
+        document.getElementById('foundImages').innerHTML = '';
+        navigator.camera.getPicture(function(imageURI) {
+            // MOve the files to somewhere local so cordova app can display them.
+            navigator.CustomCamera.localizePhotos(imageURI, function(arrayLocalizedFiles) {
+                arrayLocalizedFiles.forEach(function(objPhoto) {
+                    let newEl;
+                    if (objPhoto.status == "ok") {
+                        newEl = document.createElement('img');
+                        newEl.src = objPhoto.data;
+                    } else {
+                        newEl = document.createElement('div');
+                        newEl.innerHTML = "ERROR" + objPhoto.data;
+                    }
+                    document.getElementById('foundImages').appendChild(newEl);
+                });
+            })
+        }, function(message) {
+            alert('Failed because: ' + message);
+        }, {
+            quality: 50,
+            destinationType: Camera.DestinationType.FILE_URI
+        }, 'defaultCamera');
+    });
 
 }

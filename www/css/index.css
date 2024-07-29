@@ -102,8 +102,9 @@ h1 {
     -webkit-animation:fade 3000ms infinite;
 }
 
-#defaultCamera {
-    margin:50px;
+.btnCamera {
+    margin-top:20px;
+    margin-bottom:20px;
 }
 
 #foundImages {
