@@ -38,16 +38,84 @@
     </head>
     <body>
         <div class="app">
-            <h1>Apache Cordova</h1>
+            <h1>Custom Camera Tester</h1>
             <div id="deviceready" class="blink">
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
             </div>
-            <div>
-                <button class="btnCamera" id="chetuCamera">  Take Chetu Camera Photo(s) </button>
+            <div class="config-section">
+                <div class="config-cb">
+                    <input type="checkbox" name="blurDetectionEnabled" id="blurDetectionEnabled" class="config-cb-input"><span class="config-cb-text">Blur Detection (Gradient Threshold)</span>
+                </div>
+                <div class="config-range">
+                    <div class="config-range-text" id="blurGradientThreshold"></div><div class="config-range-units"> pixels</div>
+                    <input type="range" min="0" max="255" step="1" class="range" id="blur-range">
+                </div>
             </div>
-            <div>
-                <button class="btnCamera" id="defaultCamera">  Take Default Camera Photo  </button>
+
+            <div class="config-section">
+                <div class="config-cb">
+                    <input type="checkbox" name="angleDetectionEnabled" id="angleDetectionEnabled" class="config-cb-input"><span class="config-cb-text">Angle Detection (degress from straight-on)</span>
+                </div>
+                <div class="config-range">
+                    <div class="config-range-text" id="angleGreaterThanThreshold"></div>
+                    <div class="config-range-units"> degs</div>
+                    <input type="range" min="0" max="90" step="1" class="range" id="angle-range">
+                </div>
+            </div>
+
+            <div class="config-section">
+                <div class="config-cb">
+                    <input type="checkbox" name="glareDetectionEnabled" id="glareDetectionEnabled" class="config-cb-input"><span class="config-cb-text">Glare Detection (Brightness & Pct)</span>
+                </div>
+                <div class="config-range">
+                    <div class="config-range-text" id="glarePixelBrightnessThreshold"></div>
+                    <div class="config-range-units"> pixel brightness</div>
+                    <input type="range" min="0" max="255" step="1" class="range" id="glare-pixels-range">
+                </div>
+                <div class="config-range">
+                    <div class="config-range-text" id="glarePctPixelsBrightThreshold"></div>
+                    <div class="config-range-units"> %</div>
+                    <input type="range" min="0" max="1" value="0.1" step="0.01" class="range" id="glare-pct-pixels-range">
+                </div>
+            </div>
+
+            <div class="config-section">
+                <div class="config-cb">
+                    <input type="checkbox" name="tiltDetectionEnabled" id="tiltDetectionEnabled" class="config-cb-input"><span class="config-cb-text">Tilt Detection (degrees from level)</span>
+                </div>
+                <div class="config-range">
+                    <div class="config-range-text" id="tiltGreaterThanThreshold"></div>
+                    <div class="config-range-units"> degs</div>
+                    <input type="range" min="0" max="90" step="1" class="range" id="tilt-range">
+                </div>
+            </div>
+
+            <div class="config-section">
+                <div class="config-cb">
+                    Overlap Width
+                </div>
+                <div class="config-range">
+                    <div class="config-range-text" id="percentageOverlap"></div>
+                    <div class="config-range-units"> %</div>
+                    <input type="range" min="0" max="100" step="1" class="range" id="overlap-width-range">
+                </div>
+            </div>
+            <div class="config-section">
+                <div class="config-cb">
+                    Overlap Opacity
+                </div>
+                <div class="config-range">
+                    <div class="config-range-text" id="opacityOverlap"></div>
+                    <div class="config-range-units"> %</div>
+                    <input type="range" min="0" max="100" step="1" class="range" id="overlap-opacity-range">
+                </div>
+            </div>
+
+
+            <div class="button-section">
+                <button class="btnCamera" id="chetuCamera">Chetu Camera Capture</button>
+                <button class="btnCamera" id="defaultCamera">Default Camera Capture</button>
             </div>
             <div id="foundImages">
             </div>
