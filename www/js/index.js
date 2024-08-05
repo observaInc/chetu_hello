@@ -23,6 +23,7 @@ document.addEventListener('deviceready', onDeviceReady, false);
 
 var defaultCustomOptions = {
     quality: 50,
+    correctOrientation: true,
     angleDetectionEnabled:false,
     blurDetectionEnabled:true,
     glareDetectionEnabled:false,
@@ -33,7 +34,9 @@ var defaultCustomOptions = {
     tiltGreaterThanThreshold:10,  // 0 to 90
     blurGradientThreshold:100,  // 0 to 255
     percentageOverlap:10,  // 0 to 100
-    opacityOverlap:50   // 0 to 100
+    opacityOverlap:50,   // 0 to 100
+    minValueForPhotos:0,
+    maxValueForPhotos:3
 };
 
 
@@ -95,6 +98,8 @@ function onDeviceReady() {
     fnUpdateTextFromSettings('#tilt-range', defaultCustomOptions.tiltGreaterThanThreshold);
     fnUpdateTextFromSettings('#overlap-width-range', defaultCustomOptions.percentageOverlap);
     fnUpdateTextFromSettings('#overlap-opacity-range', defaultCustomOptions.opacityOverlap);
+    document.querySelector('#min-photo-count').textContent = defaultCustomOptions.minValueForPhotos;
+    document.querySelector('#max-photo-count').textContent = defaultCustomOptions.maxValueForPhotos;
 
 
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
@@ -145,12 +150,21 @@ function onDeviceReady() {
             alert('Failed because: ' + message);
         }, {
             quality: 50,
-            destinationType: Camera.DestinationType.FILE_URI
+            destinationType: Camera.DestinationType.FILE_URI,
+            correctOrientation: true
         }, 'defaultCamera');
     });
 
     document.querySelectorAll('.range').forEach(function(el) {
         el.addEventListener('input', fnUpdateText);
+    });
+    document.querySelector('#min-photo-count').addEventListener('input', function(event) {
+        defaultCustomOptions.minValueForPhotos = parseInt(event.target.value);
+        console.log(defaultCustomOptions);
+    });
+    document.querySelector('#max-photo-count').addEventListener('input', function(event) {
+        defaultCustomOptions.maxValueForPhotos = parseInt(event.target.value);
+        console.log(defaultCustomOptions);
     });
 
     document.querySelectorAll('.config-cb-input').forEach(function(el) {
