@@ -96,6 +96,10 @@ input[type=checkbox] {
     box-shadow: -407px 0 0 400px rgba(255, 85, 0, 0.247);
 }
 
+.tinput {
+    font-size:150%;
+}
+
 
 .section-disable input[type="range"]::-moz-range-thumb {
     border: 2px solid rgba(255, 85, 0, 0.247);
